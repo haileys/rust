@@ -16,7 +16,7 @@ mod dwarf;
 cfg_if::cfg_if! {
     if #[cfg(target_os = "emscripten")] {
         mod emcc;
-    } else if #[cfg(target_env = "msvc")] {
+    } else if #[cfg(any(target_env = "msvc", target_os = "win9x"))] {
         // This is required by the compiler to exist (e.g., it's a lang item),
         // but it's never actually called by the compiler because
         // _CxxFrameHandler3 is the personality function that is always used.

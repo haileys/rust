@@ -17,7 +17,7 @@ cfg_if::cfg_if! {
         // These "unix" family members do not have unwinder.
     } else if #[cfg(any(
         unix,
-        windows,
+        all(windows, not(target_os = "win9x")),
         target_os = "psp",
         target_os = "solid_asp3",
         all(target_vendor = "fortanix", target_env = "sgx"),
