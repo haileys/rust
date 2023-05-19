@@ -8,6 +8,9 @@
 pub mod alloc;
 pub mod env;
 
+pub mod thread_local_dtor;
+pub mod thread_local_key;
+
 #[path = "../unsupported/args.rs"]
 pub mod args;
 #[path = "../unix/cmath.rs"]
@@ -30,10 +33,6 @@ pub mod pipe;
 pub mod process;
 #[path = "../unsupported/stdio.rs"]
 pub mod stdio;
-#[path = "../unsupported/thread_local_dtor.rs"]
-pub mod thread_local_dtor;
-#[path = "../unsupported/thread_local_key.rs"]
-pub mod thread_local_key;
 #[path = "../unsupported/time.rs"]
 pub mod time;
 
