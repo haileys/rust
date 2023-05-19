@@ -184,7 +184,7 @@ pub fn output_filename(
             use crate::os::windows::prelude::*;
             Cow::Owned(crate::ffi::OsString::from_wide(wide).into())
         }
-        #[cfg(not(windows))]
+        #[cfg(not(all(windows, not(target_os = "win9x"))))]
         BytesOrWideString::Wide(_wide) => Path::new("<unknown>").into(),
     };
     if print_fmt == PrintFmt::Short && file.is_absolute() {
