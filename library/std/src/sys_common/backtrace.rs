@@ -174,7 +174,11 @@ pub fn output_filename(
         BytesOrWideString::Bytes(bytes) => {
             Path::new(crate::str::from_utf8(bytes).unwrap_or("<unknown>")).into()
         }
-        #[cfg(windows)]
+        #[cfg(target_os = "win9x")]
+        BytesOrWideString::Bytes(bytes) => {
+            Path::new(crate::ffi::OsStr::from_bytes(bytes)).into()
+        }
+        #[cfg(all(windows, not(target_os = "win9x")))]
         BytesOrWideString::Wide(wide) => {
             use crate::os::windows::prelude::*;
             Cow::Owned(crate::ffi::OsString::from_wide(wide).into())
