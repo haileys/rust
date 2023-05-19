@@ -93,8 +93,12 @@ pub mod wasi;
         all(target_vendor = "fortanix", target_env = "sgx")
     )
 )))]
-#[cfg(any(windows, doc))]
+#[cfg(any(all(windows, not(target_os = "win9x")), doc))]
 pub mod windows;
+
+// win9x
+#[cfg(target_os = "win9x")]
+pub mod win9x;
 
 // Others.
 #[cfg(target_os = "android")]

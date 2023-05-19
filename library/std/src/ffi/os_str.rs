@@ -25,6 +25,8 @@ use crate::sys_common::{AsInner, FromInner, IntoInner};
 /// * On Windows, strings are often arbitrary sequences of non-zero 16-bit
 ///   values, interpreted as UTF-16 when it is valid to do so.
 ///
+/// * On Windows 9x, strings are single-byte ASCII strings.
+///
 /// * In Rust, strings are always valid UTF-8, which may contain zeros.
 ///
 /// `OsString` and [`OsStr`] bridge this gap by simultaneously representing Rust

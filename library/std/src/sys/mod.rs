@@ -28,6 +28,9 @@ cfg_if::cfg_if! {
     if #[cfg(unix)] {
         mod unix;
         pub use self::unix::*;
+    } else if #[cfg(target_os = "win9x")] {
+        mod win9x;
+        pub use self::win9x::*;
     } else if #[cfg(windows)] {
         mod windows;
         pub use self::windows::*;

@@ -86,6 +86,7 @@ static TARGETS: &[&str] = &[
     "bpfeb-unknown-none",
     "bpfel-unknown-none",
     "i386-apple-ios",
+    "i386-pc-win9x-lld",
     "i586-pc-windows-msvc",
     "i586-unknown-linux-gnu",
     "i586-unknown-linux-musl",

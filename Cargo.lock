@@ -1085,13 +1085,13 @@ checksum = "8c97b9233581d84b8e1e689cdd3a47b6f69770084fc246e86a7f78b0d9c1d4a5"
 
 [[package]]
 name = "dlmalloc"
-version = "0.2.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a6fe28e0bf9357092740362502f5cc7955d8dc125ebda71dec72336c2e15c62e"
+version = "0.2.4"
+source = "git+https://github.com/haileys/dlmalloc-rs#03ff5ef1cd4ef51a4961ea296f7ec361b11d5e10"
 dependencies = [
  "compiler_builtins",
  "libc",
  "rustc-std-workspace-core",
+ "win9x-sync",
 ]
 
 [[package]]
@@ -4663,6 +4663,7 @@ dependencies = [
  "std_detect",
  "unwind",
  "wasi",
+ "win9x-sync",
 ]
 
 [[package]]
@@ -5412,6 +5413,16 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "830b7e5d4d90034032940e4ace0d9a9a057e7a45cd94e6c007832e39edb82f6d"
 
 [[package]]
+name = "vc6-sys"
+version = "0.1.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a5b3acd50acbd45818f69ce29566a7082e9577e0bf426a09928f1cd033244385"
+dependencies = [
+ "compiler_builtins",
+ "rustc-std-workspace-core",
+]
+
+[[package]]
 name = "vcpkg"
 version = "0.2.10"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -5498,6 +5509,17 @@ name = "wasm-bindgen-shared"
 version = "0.2.84"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0046fef7e28c3804e5e38bfa31ea2a0f73905319b677e57ebe37e49358989b5d"
+
+[[package]]
+name = "win9x-sync"
+version = "0.1.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "1d6455f4199eb8d3787a029fdce2ab4100fcf4b3cc2a6729e9b10ba062fddb0a"
+dependencies = [
+ "compiler_builtins",
+ "rustc-std-workspace-core",
+ "vc6-sys",
+]
 
 [[package]]
 name = "winapi"
