@@ -176,6 +176,7 @@ pub fn output_filename(
         }
         #[cfg(target_os = "win9x")]
         BytesOrWideString::Bytes(bytes) => {
+            use crate::os::win9x::prelude::*;
             Path::new(crate::ffi::OsStr::from_bytes(bytes)).into()
         }
         #[cfg(all(windows, not(target_os = "win9x")))]
