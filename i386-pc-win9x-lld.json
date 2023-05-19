@@ -22,6 +22,7 @@
   "max-atomic-width": 64,
   "no-default-libraries": false,
   "os": "win9x",
+  "panic-strategy": "abort",
   "pre-link-args": {
     "lld-link": [
       "/NOLOGO",
