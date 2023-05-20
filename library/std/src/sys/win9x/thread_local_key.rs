@@ -2,32 +2,15 @@ use crate::ptr;
 use crate::sync::atomic::{
     AtomicPtr, AtomicU32, Ordering::SeqCst,
 };
+use super::c;
 
 use win9x_sync::once;
 
-mod sys {
-    use core::ffi::{c_void, c_ulong};
-
-    pub type DWORD = c_ulong;
-    pub type BOOL = i32;
-    pub type LPVOID = *mut c_void;
-
-    pub const DLL_PROCESS_DETACH: u32 = 0u32;
-    pub const DLL_THREAD_DETACH: u32 = 3u32;
-    pub const TLS_OUT_OF_INDEXES: u32 = 4294967295u32;
-
-    #[link(name = "kernel32")]
-    extern "system" {
-        pub fn TlsAlloc() -> DWORD;
-        pub fn TlsSetValue(index: DWORD, value: *mut c_void) -> BOOL;
-        pub fn TlsGetValue(index: DWORD) -> *mut c_void;
-    }
-}
 
 #[cfg(test)]
 mod tests;
 
-type Key = sys::DWORD;
+type Key = c::DWORD;
 type Dtor = unsafe extern "C" fn(*mut u8);
 
 // Turns out, like pretty much everything, Windows is pretty close the
@@ -82,13 +65,13 @@ impl StaticKey {
 
     #[inline]
     pub unsafe fn set(&'static self, val: *mut u8) {
-        let r = sys::TlsSetValue(self.key(), val.cast());
+        let r = c::TlsSetValue(self.key(), val.cast());
         debug_assert_eq!(r, 1);
     }
 
     #[inline]
     pub unsafe fn get(&'static self) -> *mut u8 {
-        sys::TlsGetValue(self.key()).cast()
+        c::TlsGetValue(self.key()).cast()
     }
 
     #[inline]
@@ -104,8 +87,8 @@ impl StaticKey {
         let do_reg = self.dtor.is_some();
 
         self.once.call(|| {
-            let key = sys::TlsAlloc();
-            if key != sys::TLS_OUT_OF_INDEXES {
+            let key = c::TlsAlloc();
+            if key != c::TLS_OUT_OF_INDEXES {
                 self.key.store(key + 1, SeqCst);
 
                 if do_reg {
@@ -230,12 +213,12 @@ unsafe fn register_dtor(key: &'static StaticKey) {
 #[allow(dead_code, unused_variables, non_upper_case_globals)]
 #[used] // we don't want LLVM eliminating this symbol for any reason, and
 // when the symbol makes it to the linker the linker will take over
-pub static p_thread_callback: unsafe extern "system" fn(sys::LPVOID, sys::DWORD, sys::LPVOID) =
+pub static p_thread_callback: unsafe extern "system" fn(c::LPVOID, c::DWORD, c::LPVOID) =
     on_tls_callback;
 
 #[allow(dead_code, unused_variables, non_snake_case)]
-unsafe extern "system" fn on_tls_callback(h: sys::LPVOID, dwReason: sys::DWORD, pv: sys::LPVOID) {
-    if dwReason == sys::DLL_THREAD_DETACH || dwReason == sys::DLL_PROCESS_DETACH {
+unsafe extern "system" fn on_tls_callback(h: c::LPVOID, dwReason: c::DWORD, pv: c::LPVOID) {
+    if dwReason == c::DLL_THREAD_DETACH || dwReason == c::DLL_PROCESS_DETACH {
         run_dtors();
         #[cfg(target_thread_local)]
         super::thread_local_dtor::run_keyless_dtors();
@@ -266,9 +249,9 @@ unsafe fn run_dtors() {
             let key = (*cur).key.load(SeqCst) - 1;
             let dtor = (*cur).dtor.unwrap();
 
-            let ptr = sys::TlsGetValue(key);
+            let ptr = c::TlsGetValue(key);
             if !ptr.is_null() {
-                sys::TlsSetValue(key, ptr::null_mut());
+                c::TlsSetValue(key, ptr::null_mut());
                 dtor(ptr as *mut _);
                 any_run = true;
             }

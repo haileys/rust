@@ -5,11 +5,16 @@
 //! This module contains the facade (aka platform-specific) implementations of
 //! OS level functionality for win9x, similar to sys/wasm.
 
+pub mod c;
+
 pub mod alloc;
 pub mod env;
-
+pub mod stdio;
 pub mod thread_local_dtor;
 pub mod thread_local_key;
+
+#[path = "../unix/os_str.rs"]
+pub mod os_str;
 
 #[path = "../unsupported/args.rs"]
 pub mod args;
@@ -23,16 +28,12 @@ pub mod io;
 pub mod net;
 #[path = "../unsupported/os.rs"]
 pub mod os;
-#[path = "../unix/os_str.rs"]
-pub mod os_str;
 #[path = "../unix/path.rs"]
 pub mod path;
 #[path = "../unsupported/pipe.rs"]
 pub mod pipe;
 #[path = "../unsupported/process.rs"]
 pub mod process;
-#[path = "../unsupported/stdio.rs"]
-pub mod stdio;
 #[path = "../unsupported/time.rs"]
 pub mod time;
 
