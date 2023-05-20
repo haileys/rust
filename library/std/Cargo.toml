@@ -40,6 +40,7 @@ rand_xorshift = "0.3.0"
 dlmalloc = { git = "https://github.com/haileys/dlmalloc-rs", features = ['rustc-dep-of-std'] }
 
 [target.'cfg(target_os = "win9x")'.dependencies]
+vc6-sys = { version = '0.1', features = ['rustc-dep-of-std'] }
 win9x-sync = { version = '0.1', features = ['rustc-dep-of-std'] }
 
 [target.x86_64-fortanix-unknown-sgx.dependencies]

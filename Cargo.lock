@@ -4662,6 +4662,7 @@ dependencies = [
  "rustc-demangle",
  "std_detect",
  "unwind",
+ "vc6-sys",
  "wasi",
  "win9x-sync",
 ]
