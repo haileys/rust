@@ -9,6 +9,7 @@ pub mod c;
 
 pub mod alloc;
 pub mod env;
+pub mod os;
 pub mod stdio;
 pub mod thread_local_dtor;
 pub mod thread_local_key;
@@ -27,7 +28,7 @@ pub mod io;
 #[path = "../unsupported/net.rs"]
 pub mod net;
 #[path = "../unsupported/os.rs"]
-pub mod os;
+pub mod os_unsupported;
 #[path = "../unix/path.rs"]
 pub mod path;
 #[path = "../unsupported/pipe.rs"]

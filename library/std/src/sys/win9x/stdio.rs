@@ -1,7 +1,7 @@
 #![stable(feature = "rust1", since = "1.0.0")]
 
 use core::ptr;
-use crate::io::{self, BorrowedCursor, IoSlice, IoSliceMut};
+use crate::io;
 use super::c;
 
 // Don't cache handles but get them fresh for every read/write. This allows us to track changes to
