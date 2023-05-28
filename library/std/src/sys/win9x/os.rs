@@ -64,7 +64,7 @@ pub fn getcwd() -> io::Result<PathBuf> {
 }
 
 pub fn chdir(path: &Path) -> io::Result<()> {
-    let mut cstr = CString::new(path.as_os_str().as_bytes())?;
+    let cstr = CString::new(path.as_os_str().as_bytes())?;
     let success = unsafe { c::SetCurrentDirectoryA(cstr.as_ptr() as *mut c::CHAR) };
     if success == c::TRUE {
         Ok(())
@@ -74,28 +74,28 @@ pub fn chdir(path: &Path) -> io::Result<()> {
 }
 
 /// Gets a detailed string description for the given error number.
-pub fn error_string(mut errnum: i32) -> String {
+pub fn error_string(errnum: i32) -> String {
     // This value is calculated from the macro
     // MAKELANGID(LANG_SYSTEM_DEFAULT, SUBLANG_SYS_DEFAULT)
-    let langId = 0x0800 as c::DWORD;
+    let lang_id = 0x0800 as c::DWORD;
 
     let mut buf = [0 as u8; 2048];
 
     unsafe {
-        let mut module = ptr::null_mut();
-        let mut flags = 0;
+        let module = ptr::null_mut();
+        let flags = c::FORMAT_MESSAGE_FROM_SYSTEM | c::FORMAT_MESSAGE_IGNORE_INSERTS;
 
         let res = c::FormatMessageA(
-            flags | c::FORMAT_MESSAGE_FROM_SYSTEM | c::FORMAT_MESSAGE_IGNORE_INSERTS,
+            flags,
             module,
             errnum as c::DWORD,
-            langId,
+            lang_id,
             buf.as_mut_ptr() as *mut i8,
             buf.len() as c::DWORD,
             ptr::null_mut(),
         ) as usize;
         if res == 0 {
-            // Sometimes FormatMessageW can fail e.g., system doesn't like langId,
+            // Sometimes FormatMessageW can fail e.g., system doesn't like lang_id,
             let fm_err = errno();
             return format!("OS Error {errnum} (FormatMessageA() returned error {fm_err})");
         }

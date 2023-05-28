@@ -28,6 +28,7 @@ pub mod io;
 #[path = "../unsupported/net.rs"]
 pub mod net;
 #[path = "../unsupported/os.rs"]
+#[allow(unused)]
 pub mod os_unsupported;
 #[path = "../unix/path.rs"]
 pub mod path;
