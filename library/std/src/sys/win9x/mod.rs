@@ -11,6 +11,7 @@ pub mod alloc;
 pub mod env;
 pub mod os;
 pub mod stdio;
+pub mod thread;
 pub mod thread_local_dtor;
 pub mod thread_local_key;
 
@@ -59,8 +60,6 @@ cfg_if::cfg_if! {
         #[path = "../unsupported/locks/mod.rs"]
         pub mod locks;
         pub mod once;
-        #[path = "../unsupported/thread.rs"]
-        pub mod thread;
         #[path = "../unsupported/thread_parking.rs"]
         pub mod thread_parking;
     }

@@ -4,14 +4,14 @@
 
 use super::raw::{AsRawHandle, FromRawHandle, IntoRawHandle, RawHandle};
 use crate::fmt;
-use crate::fs;
+// use crate::fs;
 use crate::io;
 use crate::marker::PhantomData;
 use crate::mem::forget;
 use crate::ptr;
 use crate::sys;
 use crate::sys::cvt;
-use crate::sys_common::{AsInner, FromInner, IntoInner};
+// use crate::sys_common::{AsInner, /*FromInner, IntoInner*/};
 
 /// A borrowed handle.
 ///
@@ -492,6 +492,8 @@ impl AsHandle for OwnedHandle {
     }
 }
 
+// TODO
+/*
 #[stable(feature = "io_safety", since = "1.63.0")]
 impl AsHandle for fs::File {
     #[inline]
@@ -627,3 +629,4 @@ impl<T> From<crate::thread::JoinHandle<T>> for OwnedHandle {
         join_handle.into_inner().into_handle().into_inner()
     }
 }
+*/

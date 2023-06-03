@@ -3,9 +3,9 @@
 
 pub mod ffi;
 // pub mod fs;
-// pub mod io;
+pub mod io;
 // pub mod process;
-// pub mod raw;
+pub mod raw;
 // pub mod thread;
 
 /// A prelude for conveniently writing platform-specific code.
@@ -20,13 +20,15 @@ pub mod prelude {
 //     #[stable(feature = "rust1", since = "1.0.0")]
 //     pub use super::fs::FileExt;
 //     #[doc(no_inline)]
-//     #[stable(feature = "rust1", since = "1.0.0")]
+    #[stable(feature = "rust1", since = "1.0.0")]
 //     pub use super::fs::{MetadataExt, OpenOptionsExt};
 //     #[doc(no_inline)]
-//     pub use super::io::{
+    pub use super::io::{
+        AsHandle, BorrowedHandle, FromRawHandle, HandleOrInvalid, IntoRawHandle, OwnedHandle,
 //         AsHandle, AsSocket, BorrowedHandle, BorrowedSocket, FromRawHandle, FromRawSocket,
 //         HandleOrInvalid, IntoRawHandle, IntoRawSocket, OwnedHandle, OwnedSocket,
-//     };
+    };
 //     #[doc(no_inline)]
-//     pub use super::io::{AsRawHandle, AsRawSocket, RawHandle, RawSocket};
+    #[stable(feature = "rust1", since = "1.0.0")]
+    pub use super::io::{AsRawHandle, /*AsRawSocket,*/ RawHandle, /*RawSocket*/};
 }
