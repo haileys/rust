@@ -2,6 +2,8 @@
 
 use core::ptr;
 use crate::io;
+use crate::mem;
+use crate::ffi::CString;
 use super::c;
 
 // Don't cache handles but get them fresh for every read/write. This allows us to track changes to
@@ -126,5 +128,40 @@ pub fn is_ebadf(err: &io::Error) -> bool {
 }
 
 pub fn panic_output() -> Option<impl io::Write> {
-    Some(Stderr(()))
+    Some(PanicMessageBox::default())
+}
+
+#[derive(Default)]
+struct PanicMessageBox {
+    message: Vec<u8>,
+}
+
+impl io::Write for PanicMessageBox {
+    fn write(&mut self, buf: &[u8]) -> io::Result<usize> {
+        self.message.extend(buf);
+        Ok(buf.len())
+    }
+
+    fn flush(&mut self) -> io::Result<()> {
+        Ok(())
+    }
+}
+
+impl Drop for PanicMessageBox {
+    fn drop(&mut self) {
+        if self.message.len() == 0 {
+            return;
+        }
+
+        let message = CString::new(mem::take(&mut self.message)).unwrap();
+
+        unsafe {
+            c::MessageBoxA(
+                ptr::null_mut(),
+                message.as_ptr(),
+                b"Panic\0".as_ptr() as *const i8,
+                c::MB_OK | c::MB_ICONSTOP,
+            );
+        }
+    }
 }
