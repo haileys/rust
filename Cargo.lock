@@ -1091,7 +1091,7 @@ dependencies = [
  "compiler_builtins",
  "libc",
  "rustc-std-workspace-core",
- "win9x-sync",
+ "win9x-sync 0.1.1",
 ]
 
 [[package]]
@@ -4664,7 +4664,7 @@ dependencies = [
  "unwind",
  "vc6-sys",
  "wasi",
- "win9x-sync",
+ "win9x-sync 0.2.0",
 ]
 
 [[package]]
@@ -5516,6 +5516,17 @@ name = "win9x-sync"
 version = "0.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "1d6455f4199eb8d3787a029fdce2ab4100fcf4b3cc2a6729e9b10ba062fddb0a"
+dependencies = [
+ "compiler_builtins",
+ "rustc-std-workspace-core",
+ "vc6-sys",
+]
+
+[[package]]
+name = "win9x-sync"
+version = "0.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "40e2fc365934c6b6a9ce483b6bea8a476536d1cf0d642d12152ebc3888dbb49b"
 dependencies = [
  "compiler_builtins",
  "rustc-std-workspace-core",
