@@ -60,7 +60,6 @@ cfg_if::cfg_if! {
         #[path = "../unsupported/locks/mod.rs"]
         pub mod locks;
         pub mod once;
-        #[path = "../unsupported/thread_parking.rs"]
         pub mod thread_parking;
     }
 }
